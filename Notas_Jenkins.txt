@@ -1,0 +1,36 @@
+---------- INSTRUÇÕES DE TRABALHO E COMANDOS PARA JENKINS ---------
+
+- Para verificar a documentação, instalação e configuração do Jenkins:
+        https://www.jenkins.io/doc/
+- O Jenkins precisa obrigatóriamente estar na porta :8080 se for subir via docker.
+- Comandos para instalação podem ser visto também no arquivo Jenkins.md
+- O jenkins vai verificar o arquivo JenkinsFile para a execução do pipeline, a estrutura padrão de um pipeline:
+        pipeline {
+                # Corpo principal do pipeline.
+            agent {
+                # Onde será definido o agente responsável pela execução (Ex: Ruby, Node, Ruby:alpine, node:alpine, etc).
+            }
+            stages {
+                # Onde será definido os estágios que serão executados.
+                stage("Build") {
+                    steps {
+                # Onde será definido os passos que serão executados em um estágio.
+                    }
+            post { 
+                always { 
+                    # Onde será definido uma diretiva, algo que tem q acontecer ou não indenpendente do resultado do teste.
+                }
+            }
+                }
+            }
+        }
+
+- Blue Ocean é uma interface mais bonita e simples que pode ser instalado em conjunto com o jenkins.
+- Relatórios em ci, para que seja anexado o relatório no jenkins ele tem que ser exportado em formato junit(xml), assim p jenkins consegue pegar essas informações e demosntrar os relatórios de teste:
+            post { 
+                always { 
+                    junit "log/*.xml"
+                }
+            }
+    
+    # importante lembrar que o comando de teste deve estar gerarndo o relatório no formato de junit.
